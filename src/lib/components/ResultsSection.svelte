@@ -138,11 +138,65 @@
         border-radius: 8px;
         border-left: 4px solid #667eea;
         background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
+
+        .rank {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #667eea;
+            min-width: 40px;
+        }
     }
 
     .result-card.rank-1 {
         border-left-color: #fbbf24;
         background: linear-gradient(135deg, #fef3c7 0%, #ffffff 100%);
+
+        .rank {
+            color: #f59e0b;
+            font-size: 1.5rem;
+        }
+
+        .total-score {
+            color: #f59e0b;
+        }
+
+        .score-bar-global {
+            background: linear-gradient(90deg, #fbbf24 0%, #f59e0b 100%);
+        }
+    }
+
+    .result-card.rank-2 {
+        border-left-color: #a19f9a;
+        background: linear-gradient(135deg, #e7e6e6 0%, #ffffff 100%);
+        .rank {
+            color: #a1a1a1;
+            font-size: 1.5rem;
+        }
+
+        .total-score {
+            color: #a1a1a1;
+        }
+        
+        .score-bar-global {
+            background: linear-gradient(90deg, #a19f9a 0%, #a1a1a1 100%);
+        }
+    }
+
+    .result-card.rank-3 {
+        border-left-color: #CD7F32;
+        background: linear-gradient(135deg, #b98e5d 0%, #ffffff 100%);
+        .rank {
+            color: #8f4802;
+            font-size: 1.5rem;
+        }
+
+        .total-score {
+            color: #8f4802;
+        }
+        
+        .score-bar-global {
+            background: linear-gradient(90deg, #CD7F32 0%, #8f4802 100%);
+        }
     }
 
     .result-header {
@@ -150,18 +204,6 @@
         align-items: center;
         gap: 0.8rem;
         margin-bottom: 0.75rem;
-    }
-
-    .rank {
-        font-size: 1.25rem;
-        font-weight: 700;
-        color: #667eea;
-        min-width: 40px;
-    }
-
-    .result-card.rank-1 .rank {
-        color: #f59e0b;
-        font-size: 1.5rem;
     }
 
     .result-header h3 {
@@ -179,10 +221,6 @@
         background: white;
         border-radius: 8px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    }
-
-    .result-card.rank-1 .total-score {
-        color: #f59e0b;
     }
 
     .breakdown {
@@ -226,10 +264,6 @@
         transition: width 0.25s ease;
         box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
         z-index: 2;
-    }
-
-    .result-card.rank-1 .score-bar-global {
-        background: linear-gradient(90deg, #fbbf24 0%, #f59e0b 100%);
     }
 
     .score-meta {
