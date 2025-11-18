@@ -1,5 +1,5 @@
 <script lang="ts">
-	import favicon from '$lib/assets/favicon.svg';
+	import favicon from '$lib/assets/favicon.png';
 	import "$lib/color.css"
 
 	let { children } = $props();
@@ -10,3 +10,10 @@
 </svelte:head>
 
 {@render children()}
+
+
+<style>
+	:global(*) {
+		box-sizing: border-box;
+	}
+</style>
