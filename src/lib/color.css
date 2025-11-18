@@ -1,19 +1,12 @@
 :root {
-    /* Primary / Brand */
     --primary: #148f7e;
 
-    /* Page gradients */
-    --page-gradient-start: var(--primary);
-
-    /* Success */
     --success: #10b981;
     --success-2: #059669;
 
-    /* Danger */
     --danger: #ef4444;
     --danger-hover: #c91313;
 
-    /* Neutral / Light theme */
     --white: #ffffff;
     --bg-light-1: #f9fafb;
     --bg-light-2: #fafafa;
@@ -22,24 +15,15 @@
     --bg-light-3: #e9e9e9;
     --muted-text: #9ca3af;
 
-    /* Rank */
     --gold: #fbbf24;
     --gold-dark: #f59e0b;
     --silver: #a19f9a;
     --bronze: #cd7f32;
     --bronze-dark: #8f4802;
 
-    /* Dark theme tokens (app uses dark by default now) */
     --bg: #a4cfbf;
-    --card-bg: #0b1220;
-    --card-shadow: 0 6px 20px rgba(3, 7, 23, 0.7);
-    --border: #374151;
     --muted: #6b7280;
     --text: #111111;
-    --accent: #7c3aed;
-    --accent-2: #5b21b6;
     --input-bg: #071223;
     --input-border: #374151;
-    --row-even: #071627;
-    --row-hover: #0e1724;
 }

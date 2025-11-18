@@ -31,40 +31,27 @@
         <table class="matrix-table">
             <thead>
                 <tr>
-                    <th class="option-col"
-                        >Options <br /><button
+                    <th class="criterion-col">
+                        <button
                             class="clear-all-button"
-                            onclick={onClearAll}>Clear Matrix</button
-                        ></th
-                    >
-                    {#each criteria as criterion (criterion.id)}
-                        <th class="criterion-col">
-                            <div class="criterion-header">
+                            onclick={onClearAll}>Clear Matrix</button>
+                    </th>
+
+                    {#each options as option (option.id)}
+                        <th class="option-col">
+                            <div class="option-header">
                                 <ReactiveTextArea
-                                    bind:value={criterion.name}
+                                    bind:value={option.name}
                                     onchange={onChange}
-                                    class="criterion-name-input"
-                                    placeholder="Criterion"
+                                    class="option-name-input"
+                                    placeholder="Option"
                                 ></ReactiveTextArea>
 
-                                <div class="weight-badge" title="Weight">
-                                  <label for="weight">Weight: </label>
-                                    <input
-                                    name="weight"
-                                        type="number"
-                                        bind:value={criterion.weight}
-                                        onchange={onChange}
-                                        min="0"
-                                        max="10"
-                                        class="weight-input"
-                                    />
-                                </div>
                                 <button
-                                    onclick={() =>
-                                        onRemoveCriterion(criterion.id)}
-                                    class="btn-icon btn-danger-icon"
-                                    disabled={criteria.length <= 1}
-                                    title="Remove criterion"
+                                    onclick={() => onRemoveOption(option.id)}
+                                    class="btn-icon btn-danger-icon option-delete"
+                                    disabled={options.length <= 1}
+                                    title="Remove option"
                                 >
                                     x
                                 </button>
@@ -73,28 +60,44 @@
                     {/each}
                 </tr>
             </thead>
+
             <tbody>
-                {#each options as option, idx (option.id)}
-                    <tr>
-                        <td class="option-name-cell">
-                            <div class="option-name-container">
+                {#each criteria as criterion, idx (criterion.id)}
+                    <tr class="criterion-row">
+                        <td class="criterion-name-cell">
+                            <div class="criterion-row-inner">
                                 <ReactiveTextArea
-                                    bind:value={option.name}
+                                    bind:value={criterion.name}
                                     onchange={onChange}
-                                    placeholder="Option name"
-                                    class="option-name-input"
+                                    class="criterion-name-input"
+                                    placeholder="Criterion"
                                 ></ReactiveTextArea>
-                                <button
-                                    onclick={() => onRemoveOption(option.id)}
-                                    class="btn-icon btn-danger-icon"
-                                    disabled={options.length <= 1}
-                                    title="Remove option"
-                                >
-                                    x
-                                </button>
+
+                                <div class="weight-badge">
+                                    <label for="weight">Weight:</label>
+                                    <input
+                                        name="weight"
+                                        type="number"
+                                        bind:value={criterion.weight}
+                                        onchange={onChange}
+                                        min="0"
+                                        max="10"
+                                        class="weight-input"
+                                    />
+
+                                    <button
+                                        onclick={() => onRemoveCriterion(criterion.id)}
+                                        class="btn-icon btn-danger-icon criterion-delete"
+                                        disabled={criteria.length <= 1}
+                                        title="Remove criterion"
+                                    >
+                                        x
+                                    </button>
+                                </div>
                             </div>
                         </td>
-                        {#each criteria as criterion (criterion.id)}
+
+                        {#each options as option (option.id)}
                             <td class="score-cell">
                                 <input
                                     type="number"
@@ -105,21 +108,24 @@
                                     class="score-input"
                                     placeholder="0"
                                 />
+                                => {option.scores[criterion.id] * criterion.weight}
                             </td>
                         {/each}
+
                         {#if idx === 0}
                             <AddCell
                                 tag="td"
-                                rowspan={options.length}
-                                onclick={onAddCriterion}
+                                rowspan={criteria.length}
+                                onclick={onAddOption}
                             />
                         {/if}
                     </tr>
                 {/each}
+
                 <tr>
-                    <td class="option-name-cell"></td>
-                    <AddCell colspan={criteria.length} onclick={onAddOption} />
-                    <td class="option-name-cell"></td>
+                    <td class="criterion-name-cell"></td>
+                    <AddCell colspan={options.length} onclick={onAddCriterion} />
+                    <td class="criterion-name-cell"></td>
                 </tr>
             </tbody>
         </table>
@@ -146,14 +152,15 @@
         font-size: 0.9rem;
     }
 
-    .matrix-table th,
-    .matrix-table td {
+    :global(.matrix-table) th,
+    :global(.matrix-table) td {
         padding: 0.6rem;
         text-align: center;
         border: 1px solid var(--border-light);
+        vertical-align: middle;
     }
 
-    .matrix-table thead th {
+    :global(.matrix-table) thead th {
         background-color: var(--primary);
         color: var(--white);
         font-weight: 600;
@@ -162,35 +169,47 @@
         z-index: 10;
     }
 
-    .option-col {
+    :global(.criterion-col) {
         text-align: left;
-        min-width: 150px;
-        max-width: 200px;
+        min-width: 200px;
+        max-width: 260px;
     }
 
-    .criterion-col {
+    :global(.option-col) {
         min-width: 140px;
         height: 100%;
         padding: 0.4rem;
     }
 
-    .criterion-col .criterion-header {
-        height: 100%;
+    .option-header {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        justify-content: center;
+        position: relative;
+    }
+
+    :global(.option-delete) {
+        width: 20px;
+        height: 20px;
+    }
+
+    .criterion-row-inner {
         display: flex;
         flex-direction: column;
-        gap: 0.3rem;
-        align-items: center;
+        gap: 0.35rem;
+        align-items: flex-start;
         justify-content: center;
     }
 
     :global(.criterion-name-input) {
         width: 100%;
         padding: 0.3rem 0.4rem;
-        border: 1px solid rgba(0, 0, 0, 0.06);
+        border: 1px solid var(--border-light);
         border-radius: 4px;
         background: var(--white);
         color: var(--text);
-        text-align: center;
+        text-align: left;
         font-size: 0.85rem;
         font-weight: 600;
     }
@@ -208,11 +227,11 @@
     .weight-badge {
         display: flex;
         align-items: center;
-        gap: 0.2rem;
+        gap: 0.4rem;
     }
 
-    .weight-input {
-        width: 45px;
+    :global(.weight-input) {
+        width: 55px;
         padding: 0.2rem 0.3rem;
         border: 1px solid var(--border-light);
         border-radius: 4px;
@@ -223,7 +242,7 @@
         font-weight: 700;
     }
 
-    .weight-input:focus {
+    :global(.weight-input):focus {
         outline: none;
         border-color: var(--primary);
         background: var(--white);
@@ -233,7 +252,7 @@
         border: none;
         background: transparent;
         color: var(--text);
-        font-size: 1.3rem;
+        font-size: 1.1rem;
         cursor: pointer;
         padding: 0;
         width: 20px;
@@ -256,15 +275,16 @@
     .btn-danger-icon {
         background-color: var(--danger);
         color: var(--bg-light-3);
+    }
 
-        &:hover:not(:disabled) {
-            background: var(--danger-hover);
-        }
+    .btn-danger-icon:hover:not(:disabled) {
+        background: var(--danger-hover);
     }
 
     .clear-all-button {
         background: var(--danger);
         color: var(--white);
+        cursor: pointer;
         font-weight: 600;
         padding: 8px 16px;
         border: none;
@@ -272,27 +292,23 @@
         margin-top: 8px;
     }
 
-    .option-name-cell {
+    .criterion-name-cell {
         background: var(--bg-light-1);
         text-align: left;
         padding: 0.4rem;
-    }
-
-    .option-name-container {
-        display: flex;
-        align-items: center;
-        gap: 0.4rem;
+        vertical-align: middle;
     }
 
     :global(.option-name-input) {
-        flex: 1;
-        padding: 0.4rem 0.5rem;
+        width: 100%;
+        padding: 0.25rem 0.4rem;
         border: 1px solid var(--border-light);
         border-radius: 4px;
         font-size: 0.9rem;
         font-weight: 600;
         background: var(--white);
         color: var(--text);
+        text-align: center;
     }
 
     :global(.option-name-input):focus {
@@ -305,7 +321,7 @@
         padding: 0.3rem;
     }
 
-    .score-input {
+    :global(.score-input) {
         width: 60px;
         padding: 0.4rem;
         border: 2px solid var(--border-light);
@@ -316,13 +332,13 @@
         transition: all 0.2s;
     }
 
-    .score-input:focus {
+    :global(.score-input):focus {
         outline: none;
         border-color: var(--primary);
         background: var(--muted-light);
     }
 
-    .score-input:hover {
+    :global(.score-input):hover {
         border-color: var(--border-light);
     }
 
@@ -335,21 +351,21 @@
             font-size: 0.8rem;
         }
 
-        .matrix-table th,
-        .matrix-table td {
+        :global(.matrix-table) th,
+        :global(.matrix-table) td {
             padding: 0.4rem;
         }
 
-        .criterion-col {
+        :global(.option-col) {
             min-width: 100px;
         }
 
-        .score-input {
+        :global(.score-input) {
             width: 50px;
             padding: 0.3rem;
         }
 
-        .weight-input {
+        :global(.weight-input) {
             width: 40px;
         }
     }
