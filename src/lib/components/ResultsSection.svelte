@@ -1,5 +1,6 @@
 <script lang="ts">
     import type { Result, Criterion, Option } from "$lib/types";
+    import { convertToMarkdown, downloadMarkdown, copyMarkdownToClipboard } from "$lib/utils/export";
 
     interface Props {
         results: Result[];
@@ -24,14 +25,26 @@
     function widthPercentGlobal(ws: { weighted: number }) {
         return globalMax > 0 ? (ws.weighted / globalMax) * 100 : 0;
     }
+
+    function handleDownload() {
+        const md = convertToMarkdown(criteria, options, results);
+        downloadMarkdown(md);
+    }
+
+    async function handleCopy() {
+        const md = convertToMarkdown(criteria, options, results);
+        await copyMarkdownToClipboard(md);
+        // Optionally provide ephemeral UI feedback in the future
+    }
 </script>
 
 <section class="card results">
     <div class="header">
         <h2>Results</h2>
-        <button onclick={onExport} class="btn btn-success"
-            >Export To Markdown</button
-        >
+        <div class="export-actions">
+            <button onclick={handleDownload} class="btn btn-success">Download As Markdown</button>
+            <button onclick={handleCopy} class="btn btn-outline">Copy Markdown to Clipboard</button>
+        </div>
     </div>
 
     {#if results && results.length}
@@ -125,6 +138,21 @@
     .btn-success:hover {
         background: var(--success-2);
         transform: translateY(-1px);
+    }
+
+    .btn-outline {
+        background: transparent;
+        border: 1px solid var(--border-light);
+        color: var(--text);
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+        font-weight: 600;
+    }
+
+    .export-actions {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
     }
 
     .results-list {

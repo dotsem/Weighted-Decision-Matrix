@@ -1,10 +1,10 @@
 import type { Criterion, Option, Result } from '$lib/types';
 
-export function exportToMarkdown(
+export function convertToMarkdown(
 	criteria: Criterion[],
 	options: Option[],
 	results: Result[]
-): void {
+): string {
 	let markdown = '# Weighted Decision Matrix\n\n';
 
 	markdown += '## Criteria\n\n';
@@ -38,12 +38,48 @@ export function exportToMarkdown(
 		markdown += '\n';
 	});
 
-	// Download the markdown file
+	return markdown;
+}
+
+export async function copyMarkdownToClipboard(markdown: string): Promise<void> {
+	try {
+		if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
+			await navigator.clipboard.writeText(markdown);
+		} else if (typeof document !== 'undefined') {
+			const textarea = document.createElement('textarea');
+			textarea.value = markdown;
+			document.body.appendChild(textarea);
+			textarea.select();
+			document.execCommand('copy');
+			textarea.remove();
+		}
+	} catch (e) {
+		console.error('Failed to copy markdown to clipboard', e);
+	}
+}
+
+export function downloadMarkdown(markdown: string, filename = 'decision-matrix.md'): void {
+	if (typeof document === 'undefined') return;
 	const blob = new Blob([markdown], { type: 'text/markdown' });
 	const url = URL.createObjectURL(blob);
 	const a = document.createElement('a');
 	a.href = url;
-	a.download = 'decision-matrix.md';
+	a.download = filename;
+	document.body.appendChild(a);
 	a.click();
+	a.remove();
 	URL.revokeObjectURL(url);
+}
+
+// Backwards-compatible convenience wrapper
+export async function exportToMarkdown(
+	criteria: Criterion[],
+	options: Option[],
+	results: Result[],
+	opts?: { copy?: boolean; download?: boolean; filename?: string }
+): Promise<void> {
+	const { copy = false, download = true, filename = 'decision-matrix.md' } = opts || {};
+	const md = convertToMarkdown(criteria, options, results);
+	if (copy) await copyMarkdownToClipboard(md);
+	if (download) downloadMarkdown(md, filename);
 }
