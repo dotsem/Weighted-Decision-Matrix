@@ -28,9 +28,9 @@
 
 <section class="card results">
     <div class="header">
-        <h2>🏆 Results</h2>
+        <h2>Results</h2>
         <button onclick={onExport} class="btn btn-success"
-            >📥 Export To Markdown</button
+            >Export To Markdown</button
         >
     </div>
 
@@ -85,7 +85,7 @@
 
 <style>
     .card {
-        background: white;
+        background: var(--white);
         border-radius: 12px;
         padding: 1.2rem;
         box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
@@ -102,7 +102,7 @@
 
     .header h2 {
         margin: 0;
-        color: #333;
+        color: var(--text);
         font-size: 1.25rem;
     }
 
@@ -118,12 +118,12 @@
     }
 
     .btn-success {
-        background: #10b981;
-        color: white;
+        background: var(--success);
+        color: var(--white);
     }
 
     .btn-success:hover {
-        background: #059669;
+        background: var(--success-2);
         transform: translateY(-1px);
     }
 
@@ -136,66 +136,61 @@
     .result-card {
         padding: 1rem;
         border-radius: 8px;
-        border-left: 4px solid #667eea;
-        background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
-
-        .rank {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #667eea;
-            min-width: 40px;
-        }
+        border-left: 4px solid var(--primary);
+        background: linear-gradient(135deg, var(--bg-light-1) 0%, var(--white) 100%);
     }
 
+   
+
     .result-card.rank-1 {
-        border-left-color: #fbbf24;
-        background: linear-gradient(135deg, #fef3c7 0%, #ffffff 100%);
+        border-left-color: var(--gold);
+        background: linear-gradient(135deg, var(--bg-light-1) 0%, var(--white) 100%);
 
         .rank {
-            color: #f59e0b;
+            color: var(--gold-dark);
             font-size: 1.5rem;
         }
 
         .total-score {
-            color: #f59e0b;
+            color: var(--gold-dark);
         }
 
         .score-bar-global {
-            background: linear-gradient(90deg, #fbbf24 0%, #f59e0b 100%);
+            background: linear-gradient(90deg, var(--gold) 0%, var(--gold-dark) 100%);
         }
     }
 
     .result-card.rank-2 {
-        border-left-color: #a19f9a;
-        background: linear-gradient(135deg, #e7e6e6 0%, #ffffff 100%);
+        border-left-color: var(--silver);
+        background: linear-gradient(135deg, var(--bg-light-2) 0%, var(--white) 100%);
         .rank {
-            color: #a1a1a1;
+            color: var(--silver);
             font-size: 1.5rem;
         }
 
         .total-score {
-            color: #a1a1a1;
+            color: var(--silver);
         }
         
         .score-bar-global {
-            background: linear-gradient(90deg, #a19f9a 0%, #a1a1a1 100%);
+            background: linear-gradient(90deg, var(--silver) 0%, var(--silver) 100%);
         }
     }
 
     .result-card.rank-3 {
-        border-left-color: #CD7F32;
-        background: linear-gradient(135deg, #b98e5d 0%, #ffffff 100%);
+        border-left-color: var(--bronze);
+        background: linear-gradient(135deg, var(--bg-light-2) 0%, var(--white) 100%);
         .rank {
-            color: #8f4802;
+            color: var(--bronze-dark);
             font-size: 1.5rem;
         }
 
         .total-score {
-            color: #8f4802;
+            color: var(--bronze-dark);
         }
         
         .score-bar-global {
-            background: linear-gradient(90deg, #CD7F32 0%, #8f4802 100%);
+            background: linear-gradient(90deg, var(--bronze) 0%, var(--bronze-dark) 100%);
         }
     }
 
@@ -209,16 +204,16 @@
     .result-header h3 {
         margin: 0;
         flex: 1;
-        color: #111;
+        color: var(--text);
         font-size: 1.1rem;
     }
 
     .total-score {
         font-size: 1.4rem;
         font-weight: 700;
-        color: #667eea;
+        color: var(--primary);
         padding: 0.25rem 0.6rem;
-        background: white;
+        background: var(--white);
         border-radius: 8px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     }
@@ -242,25 +237,27 @@
 
     .criterion-name {
         font-weight: 600;
-        color: #444;
+        color: var(--text);
         font-size: 0.95rem;
     }
 
     .score-bar-container {
         height: 20px;
-        background: #eef2ff;
+        background: var(--bg-light-3);
         border-radius: 10px;
         overflow: hidden;
         position: relative;
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
     }
 
+     
+
     .score-bar-global {
         position: absolute;
         left: 0;
         top: 0;
         height: 100%;
-        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        background-color: color-mix(in srgb, var(--primary) 30%, transparent);
         transition: width 0.25s ease;
         box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
         z-index: 2;
@@ -272,13 +269,13 @@
 
     .score-value {
         font-weight: 600;
-        color: #333;
+        color: var(--text);
         font-size: 0.9rem;
     }
 
     .no-data {
         text-align: center;
-        color: #9ca3af;
+        color: var(--muted-text);
         padding: 1.2rem;
         font-size: 1rem;
         margin: 0;

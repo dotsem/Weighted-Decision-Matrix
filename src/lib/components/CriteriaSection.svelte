@@ -48,7 +48,7 @@
 					disabled={criteria.length <= 1}
 					title="Remove criterion"
 				>
-					🗑️
+						🗑️
 				</button>
 			</div>
 		{/each}
@@ -94,18 +94,18 @@
 	}
 
 	.btn-primary {
-		background: #667eea;
-		color: white;
+		background: var(--primary);
+		color: var(--white);
 	}
 
 	.btn-primary:hover:not(:disabled) {
-		background: #5568d3;
+		background: var(--primary);
 		transform: translateY(-1px);
 	}
 
 	.btn-danger {
-		background: #ef4444;
-		color: white;
+		background: var(--danger);
+		color: var(--white);
 		padding: 0.3rem 0.6rem;
 		font-size: 0.9rem;
 	}
@@ -125,17 +125,19 @@
 		align-items: center;
 		gap: 0.8rem;
 		padding: 0.8rem;
-		background: #f9fafb;
+		background: var(--input-bg);
 		border-radius: 6px;
 	}
 
 	.input-text {
 		padding: 0.5rem;
-		border: 2px solid #e5e7eb;
+		border: 2px solid var(--input-border);
 		border-radius: 6px;
 		font-size: 0.9rem;
 		transition: border-color 0.2s;
 		flex: 1;
+		background: var(--input-bg);
+		color: var(--text);
 	}
 
 	.input-text:focus {
@@ -167,7 +169,7 @@
 
 	.input-number:focus {
 		outline: none;
-		border-color: #667eea;
+		border-color: var(--primary);
 	}
 
 	@media (max-width: 768px) {

@@ -13,14 +13,11 @@
     }
 </script>
 
-<div class="container">
-    <header>
-        <h1>⚖️ Weighted Decision Matrix</h1>
-        <p>
-            Make better decisions by comparing options across weighted criteria
-        </p>
-    </header>
+<svelte:head> 
+    <title>Weighted Decision Matrix</title>
+</svelte:head>
 
+<div class="container">
     <MatrixTable
         options={matrixStore.options}
         criteria={matrixStore.criteria}
@@ -49,7 +46,7 @@
         padding: 0;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
             Oxygen, Ubuntu, Cantarell, sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background-color: var(--bg);
         min-height: 100vh;
     }
 
@@ -60,7 +57,7 @@
 
     header {
         text-align: center;
-        color: white;
+        color: var(--text);
         margin-bottom: 1.5rem;
     }
 

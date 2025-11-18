@@ -32,8 +32,9 @@
             <thead>
                 <tr>
                     <th class="option-col"
-                        >Options <br /><button class="clear-all-button" onclick={onClearAll}
-                            >Clear Matrix</button
+                        >Options <br /><button
+                            class="clear-all-button"
+                            onclick={onClearAll}>Clear Matrix</button
                         ></th
                     >
                     {#each criteria as criterion (criterion.id)}
@@ -46,27 +47,27 @@
                                     placeholder="Criterion"
                                 ></ReactiveTextArea>
 
-                                <div>
-                                    <div class="weight-badge" title="Weight">
-                                        <input
-                                            type="number"
-                                            bind:value={criterion.weight}
-                                            onchange={onChange}
-                                            min="0"
-                                            max="10"
-                                            class="weight-input"
-                                        />
-                                    </div>
-                                    <button
-                                        onclick={() =>
-                                            onRemoveCriterion(criterion.id)}
-                                        class="btn-icon btn-danger-icon"
-                                        disabled={criteria.length <= 1}
-                                        title="Remove criterion"
-                                    >
-                                        x
-                                    </button>
+                                <div class="weight-badge" title="Weight">
+                                  <label for="weight">Weight: </label>
+                                    <input
+                                    name="weight"
+                                        type="number"
+                                        bind:value={criterion.weight}
+                                        onchange={onChange}
+                                        min="0"
+                                        max="10"
+                                        class="weight-input"
+                                    />
                                 </div>
+                                <button
+                                    onclick={() =>
+                                        onRemoveCriterion(criterion.id)}
+                                    class="btn-icon btn-danger-icon"
+                                    disabled={criteria.length <= 1}
+                                    title="Remove criterion"
+                                >
+                                    x
+                                </button>
                             </div>
                         </th>
                     {/each}
@@ -127,41 +128,38 @@
 
 <style>
     .card {
-        background: white;
+        background: var(--white);
         border-radius: 12px;
         padding: 1.2rem;
         box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
 
-        .table-container {
-            overflow-x: auto;
-            border-radius: 8px;
-            border: 1px solid #e5e7eb;
+    .card .table-container {
+        overflow-x: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border-light);
+    }
 
-            .matrix-table {
-                width: 100%;
-                border-collapse: collapse;
-                font-size: 0.9rem;
+    .matrix-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+    }
 
-                th,
-                td {
-                    padding: 0.6rem;
-                    text-align: center;
-                    border: 1px solid #e5e7eb;
-                }
-                thead th {
-                    background: linear-gradient(
-                        135deg,
-                        #667eea 0%,
-                        #764ba2 100%
-                    );
-                    color: white;
-                    font-weight: 600;
-                    position: sticky;
-                    top: 0;
-                    z-index: 10;
-                }
-            }
-        }
+    .matrix-table th,
+    .matrix-table td {
+        padding: 0.6rem;
+        text-align: center;
+        border: 1px solid var(--border-light);
+    }
+
+    .matrix-table thead th {
+        background-color: var(--primary);
+        color: var(--white);
+        font-weight: 600;
+        position: sticky;
+        top: 0;
+        z-index: 10;
     }
 
     .option-col {
@@ -174,38 +172,37 @@
         min-width: 140px;
         height: 100%;
         padding: 0.4rem;
+    }
 
-        .criterion-header {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-
-            gap: 0.3rem;
-            align-items: center;
-            justify-content: center;
-        }
+    .criterion-col .criterion-header {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        align-items: center;
+        justify-content: center;
     }
 
     :global(.criterion-name-input) {
         width: 100%;
         padding: 0.3rem 0.4rem;
-        border: 1px solid rgba(255, 255, 255, 0.3);
+        border: 1px solid rgba(0, 0, 0, 0.06);
         border-radius: 4px;
-        background: rgba(255, 255, 255, 0.2);
-        color: white;
+        background: var(--white);
+        color: var(--text);
         text-align: center;
         font-size: 0.85rem;
         font-weight: 600;
+    }
 
-        &::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
+    :global(.criterion-name-input)::placeholder {
+        color: var(--muted-text);
+    }
 
-        &:focus {
-            outline: none;
-            background: rgba(255, 255, 255, 0.3);
-            border-color: rgba(255, 255, 255, 0.5);
-        }
+    :global(.criterion-name-input):focus {
+        outline: none;
+        background: var(--white);
+        border-color: var(--primary);
     }
 
     .weight-badge {
@@ -217,10 +214,10 @@
     .weight-input {
         width: 45px;
         padding: 0.2rem 0.3rem;
-        border: 1px solid rgba(255, 255, 255, 0.3);
+        border: 1px solid var(--border-light);
         border-radius: 4px;
-        background: rgba(255, 255, 255, 0.95);
-        color: #667eea;
+        background: var(--white);
+        color: var(--primary);
         text-align: center;
         font-size: 0.8rem;
         font-weight: 700;
@@ -228,14 +225,14 @@
 
     .weight-input:focus {
         outline: none;
-        border-color: white;
-        background: white;
+        border-color: var(--primary);
+        background: var(--white);
     }
 
     .btn-icon {
         border: none;
         background: transparent;
-        color: white;
+        color: var(--text);
         font-size: 1.3rem;
         cursor: pointer;
         padding: 0;
@@ -248,7 +245,7 @@
     }
 
     .btn-icon:hover:not(:disabled) {
-        background: rgba(255, 255, 255, 0.2);
+        background: rgba(0, 0, 0, 0.04);
     }
 
     .btn-icon:disabled {
@@ -256,13 +253,18 @@
         cursor: not-allowed;
     }
 
-    .btn-danger-icon:hover:not(:disabled) {
-        background: rgba(239, 68, 68, 0.9);
+    .btn-danger-icon {
+        background-color: var(--danger);
+        color: var(--bg-light-3);
+
+        &:hover:not(:disabled) {
+            background: var(--danger-hover);
+        }
     }
 
     .clear-all-button {
-        background: #ef4444;
-        color: white;
+        background: var(--danger);
+        color: var(--white);
         font-weight: 600;
         padding: 8px 16px;
         border: none;
@@ -271,7 +273,7 @@
     }
 
     .option-name-cell {
-        background: #f9fafb;
+        background: var(--bg-light-1);
         text-align: left;
         padding: 0.4rem;
     }
@@ -285,31 +287,28 @@
     :global(.option-name-input) {
         flex: 1;
         padding: 0.4rem 0.5rem;
-        border: 1px solid #e5e7eb;
+        border: 1px solid var(--border-light);
         border-radius: 4px;
         font-size: 0.9rem;
         font-weight: 600;
-        background: white;
-
-        &:focus {
-            outline: none;
-            border-color: #667eea;
-        }
+        background: var(--white);
+        color: var(--text);
     }
 
-    .option-name-container .btn-icon {
-        color: #ef4444;
+    :global(.option-name-input):focus {
+        outline: none;
+        border-color: var(--primary);
     }
 
     .score-cell {
-        background: white;
+        background: var(--white);
         padding: 0.3rem;
     }
 
     .score-input {
         width: 60px;
         padding: 0.4rem;
-        border: 2px solid #e5e7eb;
+        border: 2px solid var(--border-light);
         border-radius: 4px;
         text-align: center;
         font-size: 0.9rem;
@@ -319,21 +318,16 @@
 
     .score-input:focus {
         outline: none;
-        border-color: #667eea;
-        background: #f0f4ff;
+        border-color: var(--primary);
+        background: var(--muted-light);
     }
 
     .score-input:hover {
-        border-color: #cbd5e1;
-    }
-
-    /* Zebra striping for rows */
-    .matrix-table tbody tr:nth-child(even) {
-        background: #fafafa;
+        border-color: var(--border-light);
     }
 
     .matrix-table tbody tr:hover {
-        background: #f0f4ff;
+        background: var(--primary);
     }
 
     @media (max-width: 768px) {

@@ -34,7 +34,7 @@
 						disabled={options.length <= 1}
 						title="Remove option"
 					>
-						🗑️
+						 🗑️
 					</button>
 				</div>
 				<div class="scores-grid">
@@ -76,7 +76,7 @@
 
 	.header h2 {
 		margin: 0;
-		color: #333;
+		color: var(--text);
 		font-size: 1.25rem;
 	}
 
@@ -97,24 +97,24 @@
 	}
 
 	.btn-primary {
-		background: #667eea;
-		color: white;
+		background: var(--primary);
+		color: var(--white);
 	}
 
 	.btn-primary:hover:not(:disabled) {
-		background: #5568d3;
+		background: var(--primary);
 		transform: translateY(-1px);
 	}
 
 	.btn-danger {
-		background: #ef4444;
-		color: white;
+		background: var(--danger);
+		color: var(--white);
 		padding: 0.3rem 0.6rem;
 		font-size: 0.9rem;
 	}
 
 	.btn-danger:hover:not(:disabled) {
-		background: #dc2626;
+		background: rgba(220,38,38,0.9);
 	}
 
 	.list {
@@ -125,7 +125,7 @@
 
 	.option-card {
 		padding: 0.8rem;
-		background: #f9fafb;
+		background: var(--bg-light-1);
 		border-radius: 6px;
 	}
 
@@ -137,7 +137,7 @@
 
 	.input-text {
 		padding: 0.5rem;
-		border: 2px solid #e5e7eb;
+		border: 2px solid var(--border-light);
 		border-radius: 6px;
 		font-size: 0.9rem;
 		transition: border-color 0.2s;
@@ -146,7 +146,7 @@
 
 	.input-text:focus {
 		outline: none;
-		border-color: #667eea;
+		border-color: var(--primary);
 	}
 
 	.option-name {
@@ -167,13 +167,13 @@
 
 	.score-item label {
 		font-size: 0.8rem;
-		color: #666;
+		color: var(--muted-text);
 		font-weight: 500;
 	}
 
 	.input-number {
 		padding: 0.4rem;
-		border: 2px solid #e5e7eb;
+		border: 2px solid var(--border-light);
 		border-radius: 6px;
 		font-size: 0.9rem;
 		text-align: center;
@@ -181,6 +181,6 @@
 
 	.input-number:focus {
 		outline: none;
-		border-color: #667eea;
+		border-color: var(--primary);
 	}
 </style>

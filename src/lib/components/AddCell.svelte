@@ -27,11 +27,10 @@
 
 <style>
     .add-cell {
-        transition: 400msz;
         padding: 0;
         background: rgba(102, 126, 234, 0.05);
         vertical-align: middle;
-        border: 1px solid #e5e7eb;
+        border: 1px solid rgba(0,0,0,0.06);
         text-align: center;
         font-weight: bold;
         font-size: 1.2rem;
@@ -52,10 +51,6 @@
             background: rgba(102, 126, 234, 0.05);
         }
 
-        &:hover {
-            transition: 400ms;
-            font-size: 1.5rem;
-        }
     }
 
     th.add-cell {
