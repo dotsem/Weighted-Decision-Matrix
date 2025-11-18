@@ -30,6 +30,15 @@
     <div class="table-container">
         <table class="matrix-table">
             <thead>
+                <tr class="label-row">
+                  {#if criteria.length === 1} 
+                    <th class="label-col">Criteria</th>
+                    {:else}
+                    <th class="label-col">Criterion</th>
+                    {/if}
+                        <th class="label-col" colspan="{options.length}">Option{options.length > 1 ? "s" : ""}</th>
+                </tr>
+
                 <tr>
                     <th class="criterion-col">
                         <button
@@ -158,6 +167,16 @@
         text-align: center;
         border: 1px solid var(--border-light);
         vertical-align: middle;
+    }
+
+    :global(.matrix-table) thead tr.label-row th {
+        background: transparent;
+        color: var(--muted-text);
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        padding-top: 0.8rem;
+        padding-bottom: 0.4rem;
     }
 
     :global(.matrix-table) thead th {

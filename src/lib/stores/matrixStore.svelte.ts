@@ -133,10 +133,21 @@ class MatrixStore {
 	}
 
 	clear() {
-		this.criteria = [{ id: '1', name: 'Criterion 1', weight: 1 }];
-		this.options = [{ id: '1', name: 'Option 1', scores: { '1': 5 } }];
-		this.nextCriterionId = 2;
-		this.nextOptionId = 2;
+		this.criteria = [
+			{ id: '1', name: 'Criterion 1', weight: 1 },
+			{ id: '2', name: 'Criterion 2', weight: 1 },
+			{ id: '3', name: 'Criterion 3', weight: 1 }
+		];
+
+		const defaultCriteriaIds = this.criteria.map((c) => c.id);
+		this.options = [
+			{ id: '1', name: 'Option 1', scores: Object.fromEntries(defaultCriteriaIds.map((id) => [id, 5])) },
+			{ id: '2', name: 'Option 2', scores: Object.fromEntries(defaultCriteriaIds.map((id) => [id, 5])) },
+			{ id: '3', name: 'Option 3', scores: Object.fromEntries(defaultCriteriaIds.map((id) => [id, 5])) }
+		];
+
+		this.nextCriterionId = 4;
+		this.nextOptionId = 4;
 		this.save();
 	}
 }
