@@ -65,7 +65,7 @@
 
     {#each options as option (option.id)}
         <td
-            class="bg-[#292929] text-text p-1 border border-[#3D3D3D] align-middle text-center"
+            class="bg-[#292929] min-w-[200px] text-text p-1 border border-[#3D3D3D] align-middle text-center"
         >
             <input
                 type="number"
