@@ -17,7 +17,7 @@
     <title>Weighted Decision Matrix</title>
 </svelte:head>
 
-<div class="p-2 text-center text-text mb-6">
+<div class="p-2 m-0 md:m-2 text-center text-text mb-6">
     <h1
         class="text-3xl md:text-[2.5rem] mt-0 mb-1.5 drop-shadow-[2px_2px_4px_rgba(0,0,0,0.2)]"
     >

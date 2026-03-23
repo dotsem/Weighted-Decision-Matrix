@@ -46,9 +46,9 @@
 <div
     class="col-span-full bg-[#292929] rounded-xl shadow-[0_4px_16px_rgba(0,0,0,0.08)]"
 >
-    <div class="flex justify-between items-center mb-4 gap-3">
+    <div class="flex flex-wrap justify-between items-center mb-4 gap-3">
         <h2 class="m-0 text-text text-xl font-bold">Results</h2>
-        <div class="flex gap-2 items-center">
+        <div class="flex flex-wrap gap-2 items-center">
             <Button onclick={handleDownload} variant="primary">
                 Download As Markdown
             </Button>
