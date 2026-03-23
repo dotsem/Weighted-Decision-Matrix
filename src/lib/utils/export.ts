@@ -15,11 +15,11 @@ export function convertToMarkdown(
 	});
 
 	markdown += '\n## Options and Scores\n\n';
-	markdown += '| Option | ' + criteria.map((c) => c.name).join(' | ') + ' |\n';
-	markdown += '|--------|' + criteria.map(() => '--------').join('|') + '|\n';
-	options.forEach((option) => {
-		const scores = criteria.map((c) => option.scores[c.id] || 0).join(' | ');
-		markdown += `| ${option.name} | ${scores} |\n`;
+	markdown += '| | ' + options.map((o) => o.name).join(' | ') + ' |\n';
+	markdown += '|--------|' + options.map(() => '--------').join('|') + '|\n';
+	criteria.forEach((criterion) => {
+		const scores = options.map((o) => o.scores[criterion.id] || 0).join(' | ');
+		markdown += `| ${criterion.name} | ${scores} |\n`;
 	});
 
 	markdown += '\n## Results (Ranked)\n\n';
