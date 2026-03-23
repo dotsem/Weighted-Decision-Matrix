@@ -1,38 +1,57 @@
-# sv
+# Weighted Decision Matrix
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A premium, interactive web application for making objective decisions based on multiple criteria and weights. Built with the latest web technologies for a smooth and responsive experience.
 
-## Creating a project
+## Features
 
-If you're seeing this, you've probably already done this step. Congrats!
+- **Dynamic Matrix**: Add or remove as many criteria and options as you need.
+- **Weighted Scoring**: Assign weights to different criteria to reflect their importance.
+- **Real-time Results**: See updated rankings and scores instantly as you change values.
+- **Visual Breakdown**: Clear progress bars and color-coded rankings (Gold, Silver, Bronze) for easy interpretation.
+- **Markdown Export**: Export your entire decision matrix and results as a clean Markdown file for documentation or sharing.
+- **Local Storage**: Automatically saves your decision matrix to local storage for easy access.
+- **Modern UI**: Dark mode and a responsive layout that works on all devices.
 
-```sh
-# create a new project in the current directory
-npx sv create
+## Visit the app
 
-# create a new project in my-app
-npx sv create my-app
-```
+[Weighted Decision Matrix](https://dotsem.github.io/Weighted-Decision-Matrix/)
 
-## Developing
+## Getting Started
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+### Prerequisites
 
-```sh
-npm run dev
+- [Node.js](https://nodejs.org/) (latest LTS recommended)
+- [pnpm](https://pnpm.io/) (preferred package manager)
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+### Installation
 
-## Building
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/dotsem/Weighted-Decision-Matrix.git
+   cd Weighted-Decision-Matrix
+   ```
 
-To create a production version of your app:
+2. Install dependencies:
+   ```bash
+   pnpm install
+   npm install
+   ```
+   (currently the buildtool relies on npm)
 
-```sh
-npm run build
-```
+3. Run the development server:
+   ```bash
+   pnpm run dev
+   ```
 
-You can preview the production build with `npm run preview`.
+4. Open `http://localhost:5173` in your browser.
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+## Usage
+
+1. **Add Criteria**: Name your criteria (e.g., "Price", "Performance") and set a weight from 0 to 10.
+2. **Add Options**: Add the items you are comparing (e.g., "Product A", "Product B").
+3. **Score**: Rate each option against each criterion on a scale of 0 to 10.
+4. **Decide**: The results section will automatically rank your options based on the weighted scores.
+
+## License
+
+MIT
