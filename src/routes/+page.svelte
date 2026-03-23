@@ -17,68 +17,35 @@
     <title>Weighted Decision Matrix</title>
 </svelte:head>
 
-<MatrixTable
-    options={matrixStore.options}
-    criteria={matrixStore.criteria}
-    onAddOption={() => matrixStore.addOption()}
-    onRemoveOption={(id) => matrixStore.removeOption(id)}
-    onAddCriterion={() => matrixStore.addCriterion()}
-    onRemoveCriterion={(id) => matrixStore.removeCriterion(id)}
-    onChange={() => matrixStore.updateOption()}
-    onClearAll={() => {
-        if (confirm("Are you sure?")) matrixStore.clear();
-    }}
-/>
-<hr />
+<div class="p-2 text-center text-text mb-6">
+    <h1
+        class="text-3xl md:text-[2.5rem] mt-0 mb-1.5 drop-shadow-[2px_2px_4px_rgba(0,0,0,0.2)]"
+    >
+        Weighted Decision Matrix
+    </h1>
+    <p class="text-base opacity-95 mt-0 mb-6">
+        Evaluate and compare multiple options based on weighted criteria to make
+        informed decisions.
+    </p>
 
-<ResultsSection
-    results={matrixStore.results}
-    criteria={matrixStore.criteria}
-    options={matrixStore.options}
-    onExport={handleExport}
-/>
+    <MatrixTable
+        options={matrixStore.options}
+        criteria={matrixStore.criteria}
+        onAddOption={() => matrixStore.addOption()}
+        onRemoveOption={(id) => matrixStore.removeOption(id)}
+        onAddCriterion={() => matrixStore.addCriterion()}
+        onRemoveCriterion={(id) => matrixStore.removeCriterion(id)}
+        onChange={() => matrixStore.updateOption()}
+        onClearAll={() => {
+            if (confirm("Are you sure?")) matrixStore.clear();
+        }}
+    />
+    <hr class="border-primary my-8" />
 
-<style>
-    :global(body) {
-        margin: 1rem;
-        padding: 0;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-            Oxygen, Ubuntu, Cantarell, sans-serif;
-        min-height: 100vh;
-        background-color: var(--bg);
-    }
-
-    .container {
-        margin: 0 auto;
-        padding: 1.5rem;
-    }
-
-    header {
-        text-align: center;
-        color: var(--text);
-        margin-bottom: 1.5rem;
-    }
-
-    header h1 {
-        font-size: 2.5rem;
-        margin: 0 0 0.3rem 0;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-    }
-
-    header p {
-        font-size: 1rem;
-        opacity: 0.95;
-        margin: 0;
-        margin-bottom: 1.5rem;
-    }
-
-    @media (max-width: 768px) {
-        .container {
-            padding: 1rem;
-        }
-
-        header h1 {
-            font-size: 1.8rem;
-        }
-    }
-</style>
+    <ResultsSection
+        results={matrixStore.results}
+        criteria={matrixStore.criteria}
+        options={matrixStore.options}
+        onExport={handleExport}
+    />
+</div>

@@ -16,41 +16,15 @@
     role="button"
     tabindex="0"
     aria-label="Add cell"
-    class="add-cell"
-    class:add-column={rowspan > 1}
-    class:add-row={colspan > 1}
+    class="p-0 bg-[#474747] align-middle text-center font-bold text-[1.2rem] text-text cursor-pointer hover:bg-primary transition-colors {rowspan >
+    1
+        ? 'w-[32px] min-w-[32px] max-w-[32px]'
+        : ''} {colspan > 1 ? 'h-[40px] min-h-[40px] max-h-[40px]' : ''} {tag ===
+    'th'
+        ? 'bg-[rgba(102,126,234,0.2)]'
+        : ''}"
     {colspan}
     {rowspan}
 >
     +
 </svelte:element>
-
-<style>
-    .add-cell {
-        padding: 0;
-        background: var(--bg-light-3);
-        vertical-align: middle;
-        text-align: center;
-        font-weight: bold;
-        font-size: 1.2rem;
-        color: var(--text);
-
-        cursor: pointer;
-
-        &.add-column {
-            width: 32px;
-            min-width: 32px;
-            max-width: 32px;
-        }
-
-        &.add-row {
-            height: 40px;
-            min-height: 40px;
-            max-height: 40px;
-        }
-    }
-
-    th.add-cell {
-        background: rgba(102, 126, 234, 0.2);
-    }
-</style>

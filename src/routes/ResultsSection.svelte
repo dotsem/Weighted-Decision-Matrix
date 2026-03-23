@@ -1,4 +1,5 @@
 <script lang="ts">
+    import Button from "$lib/components/Button.svelte";
     import type { Result, Criterion, Option } from "$lib/types";
     import {
         convertToMarkdown,
@@ -42,307 +43,110 @@
     }
 </script>
 
-<div class="header">
-    <h2>Results</h2>
-    <div class="export-actions">
-        <button onclick={handleDownload} class="btn btn-success"
-            >Download As Markdown</button
-        >
-        <button onclick={handleCopy} class="btn btn-outline"
-            >Copy Markdown to Clipboard</button
-        >
+<div
+    class="col-span-full bg-[#292929] rounded-xl shadow-[0_4px_16px_rgba(0,0,0,0.08)]"
+>
+    <div class="flex justify-between items-center mb-4 gap-3">
+        <h2 class="m-0 text-text text-xl font-bold">Results</h2>
+        <div class="flex gap-2 items-center">
+            <Button onclick={handleDownload} variant="primary">
+                Download As Markdown
+            </Button>
+            <Button onclick={handleCopy} variant="secondary">
+                Copy Markdown to Clipboard
+            </Button>
+        </div>
     </div>
-</div>
 
-{#if results && results.length}
-    <div class="results-list">
-        {#each results as result, index (result.optionId)}
-            <div class="result-card rank-{index + 1}">
-                <div class="result-header">
-                    <span class="rank">#{index + 1}</span>
-                    <h3>{result.optionName}</h3>
-                    <span class="total-score"
-                        >{result.totalScore.toFixed(2)}</span
-                    >
-                </div>
+    {#if results && results.length}
+        <div class="flex flex-col gap-3.5">
+            {#each results as result, index (result.optionId)}
+                <div
+                    class="p-4 rounded-lg shadow-lg border-l-4 bg-linear-to-br from-bg-light-1 to-[#292929] {index ===
+                    0
+                        ? 'border-l-gold from-[#3D3D3D]'
+                        : index === 1
+                          ? 'border-l-silver'
+                          : index === 2
+                            ? 'border-l-bronze'
+                            : 'border-l-primary'}"
+                >
+                    <div class="flex items-center gap-3 mb-3">
+                        <span
+                            class="text-2xl font-bold {index === 0
+                                ? 'text-gold-dark'
+                                : index === 1
+                                  ? 'text-silver'
+                                  : index === 2
+                                    ? 'text-bronze-dark'
+                                    : 'text-text'}"
+                        >
+                            #{index + 1}
+                        </span>
+                        <h3 class="m-0 flex-1 text-text text-lg font-bold">
+                            {result.optionName}
+                        </h3>
+                        <span
+                            class="text-[1.4rem] font-bold px-2.5 py-1 bg-[#292929] rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.06)] {index ===
+                            0
+                                ? 'text-gold-dark'
+                                : index === 1
+                                  ? 'text-silver'
+                                  : index === 2
+                                    ? 'text-bronze-dark'
+                                    : 'text-primary'}"
+                        >
+                            {result.totalScore.toFixed(2)}
+                        </span>
+                    </div>
 
-                <div class="breakdown">
-                    {#each result.weightedScores as ws}
-                        <div class="breakdown-item">
-                            <div class="criterion-col">
-                                <span class="criterion-name"
-                                    >{ws.criterionName}</span
-                                >
-                            </div>
+                    <div class="flex flex-col gap-2.5">
+                        {#each result.weightedScores as ws}
+                            <div
+                                class="grid grid-cols-1 md:grid-cols-[160px_1fr_120px] items-center gap-1.5 md:gap-3"
+                            >
+                                <div class="text-left">
+                                    <span
+                                        class="font-semibold text-text text-[0.95rem]"
+                                        >{ws.criterionName}</span
+                                    >
+                                </div>
 
-                            <div class="score-bar-container" aria-hidden="true">
                                 <div
-                                    class="score-bar-global"
-                                    style="width: {widthPercentGlobal(ws)}%"
-                                ></div>
-                            </div>
-
-                            <div class="score-meta">
-                                <span class="score-value"
-                                    >{ws.score} * w = {ws.weighted.toFixed(
-                                        2,
-                                    )}</span
+                                    class="h-5 bg-[#474747] rounded-full overflow-hidden relative shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]"
+                                    aria-hidden="true"
                                 >
+                                    <div
+                                        class="absolute left-0 top-0 h-full transition-[width] duration-250 ease-in-out shadow-[inset_0_1px_2px_rgba(0,0,0,0.06)] z-10 {index ===
+                                        0
+                                            ? 'bg-linear-to-r from-gold to-gold-dark'
+                                            : index === 1
+                                              ? 'bg-linear-to-r from-silver to-silver'
+                                              : index === 2
+                                                ? 'bg-linear-to-r from-bronze to-bronze-dark'
+                                                : 'bg-text'}"
+                                        style="width: {widthPercentGlobal(ws)}%"
+                                    ></div>
+                                </div>
+
+                                <div class="text-left md:text-right">
+                                    <span
+                                        class="font-semibold text-text text-[0.9rem]"
+                                    >
+                                        {ws.score} * w = {ws.weighted.toFixed(
+                                            2,
+                                        )}
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                    {/each}
+                        {/each}
+                    </div>
                 </div>
-            </div>
-        {/each}
-    </div>
-{:else}
-    <p class="no-data">Add criteria and options to see results</p>
-{/if}
-
-<style>
-    .card {
-        background: var(--white);
-        border-radius: 12px;
-        padding: 1.2rem;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-        grid-column: 1 / -1;
-    }
-
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1rem;
-        gap: 0.8rem;
-    }
-
-    .header h2 {
-        margin: 0;
-        color: var(--text);
-        font-size: 1.25rem;
-    }
-
-    .btn {
-        padding: 0.4rem 0.8rem;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 0.85rem;
-        font-weight: 600;
-        transition: all 0.2s;
-        white-space: nowrap;
-    }
-
-    .btn-success {
-        background: var(--success);
-        color: var(--white);
-    }
-
-    .btn-success:hover {
-        background: var(--success-2);
-        transform: translateY(-1px);
-    }
-
-    .btn-outline {
-        background: transparent;
-        border: 1px solid var(--border-light);
-        color: var(--text);
-        padding: 0.4rem 0.75rem;
-        border-radius: 6px;
-        font-weight: 600;
-    }
-
-    .export-actions {
-        display: flex;
-        gap: 0.5rem;
-        align-items: center;
-    }
-
-    .results-list {
-        display: flex;
-        flex-direction: column;
-        gap: 0.9rem;
-    }
-
-    .result-card {
-        padding: 1rem;
-        border-radius: 8px;
-        border-left: 4px solid var(--primary);
-        background: linear-gradient(
-            135deg,
-            var(--bg-light-1) 0%,
-            var(--white) 100%
-        );
-    }
-
-    .result-card.rank-1 {
-        border-left-color: var(--gold);
-        background: linear-gradient(
-            135deg,
-            var(--bg-light-1) 0%,
-            var(--white) 100%
-        );
-
-        .rank {
-            color: var(--gold-dark);
-            font-size: 1.5rem;
-        }
-
-        .total-score {
-            color: var(--gold-dark);
-        }
-
-        .score-bar-global {
-            background: linear-gradient(
-                90deg,
-                var(--gold) 0%,
-                var(--gold-dark) 100%
-            );
-        }
-    }
-
-    .result-card.rank-2 {
-        border-left-color: var(--silver);
-        background: linear-gradient(
-            135deg,
-            var(--bg-light-2) 0%,
-            var(--white) 100%
-        );
-        .rank {
-            color: var(--silver);
-            font-size: 1.5rem;
-        }
-
-        .total-score {
-            color: var(--silver);
-        }
-
-        .score-bar-global {
-            background: linear-gradient(
-                90deg,
-                var(--silver) 0%,
-                var(--silver) 100%
-            );
-        }
-    }
-
-    .result-card.rank-3 {
-        border-left-color: var(--bronze);
-        background: linear-gradient(
-            135deg,
-            var(--bg-light-2) 0%,
-            var(--white) 100%
-        );
-        .rank {
-            color: var(--bronze-dark);
-            font-size: 1.5rem;
-        }
-
-        .total-score {
-            color: var(--bronze-dark);
-        }
-
-        .score-bar-global {
-            background: linear-gradient(
-                90deg,
-                var(--bronze) 0%,
-                var(--bronze-dark) 100%
-            );
-        }
-    }
-
-    .result-header {
-        display: flex;
-        align-items: center;
-        gap: 0.8rem;
-        margin-bottom: 0.75rem;
-    }
-
-    .result-header h3 {
-        margin: 0;
-        flex: 1;
-        color: var(--text);
-        font-size: 1.1rem;
-    }
-
-    .total-score {
-        font-size: 1.4rem;
-        font-weight: 700;
-        color: var(--primary);
-        padding: 0.25rem 0.6rem;
-        background: var(--white);
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    }
-
-    .breakdown {
-        display: flex;
-        flex-direction: column;
-        gap: 0.6rem;
-    }
-
-    .breakdown-item {
-        display: grid;
-        grid-template-columns: 160px 1fr 120px;
-        align-items: center;
-        gap: 0.8rem;
-    }
-
-    .criterion-col {
-        text-align: left;
-    }
-
-    .criterion-name {
-        font-weight: 600;
-        color: var(--text);
-        font-size: 0.95rem;
-    }
-
-    .score-bar-container {
-        height: 20px;
-        background: var(--bg-light-3);
-        border-radius: 10px;
-        overflow: hidden;
-        position: relative;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
-    }
-
-    .score-bar-global {
-        position: absolute;
-        left: 0;
-        top: 0;
-        height: 100%;
-        background-color: color-mix(in srgb, var(--primary) 30%, transparent);
-        transition: width 0.25s ease;
-        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
-        z-index: 2;
-    }
-
-    .score-meta {
-        text-align: right;
-    }
-
-    .score-value {
-        font-weight: 600;
-        color: var(--text);
-        font-size: 0.9rem;
-    }
-
-    .no-data {
-        text-align: center;
-        color: var(--muted-text);
-        padding: 1.2rem;
-        font-size: 1rem;
-        margin: 0;
-    }
-
-    @media (max-width: 768px) {
-        .breakdown-item {
-            grid-template-columns: 1fr;
-            gap: 0.4rem;
-        }
-        .score-meta {
-            text-align: left;
-        }
-    }
-</style>
+            {/each}
+        </div>
+    {:else}
+        <p class="text-center text-muted-text p-5 text-base m-0">
+            Add criteria and options to see results
+        </p>
+    {/if}
+</div>

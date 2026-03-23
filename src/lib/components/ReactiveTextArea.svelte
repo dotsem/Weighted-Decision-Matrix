@@ -17,19 +17,16 @@
     }
     onMount(() => {
         onChange();
-    })
-
+    });
 </script>
 
-<textarea bind:this={textarea} rows="1" bind:value oninput={onChange} {...props}>
+<textarea
+    bind:this={textarea}
+    rows="1"
+    bind:value
+    oninput={onChange}
+    {...props}
+    class="{props.class ||
+        ''} resize-none w-full min-h-4 overflow-hidden text-[1rem]"
+>
 </textarea>
-
-<style>
-    textarea {
-        resize: none;
-        width: 100%;
-        min-height: 1rem;
-        overflow: hidden;
-        font-size: 1rem;
-    }
-</style>
