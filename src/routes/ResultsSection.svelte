@@ -1,6 +1,10 @@
 <script lang="ts">
     import type { Result, Criterion, Option } from "$lib/types";
-    import { convertToMarkdown, downloadMarkdown, copyMarkdownToClipboard } from "$lib/utils/export";
+    import {
+        convertToMarkdown,
+        downloadMarkdown,
+        copyMarkdownToClipboard,
+    } from "$lib/utils/export";
 
     interface Props {
         results: Result[];
@@ -16,8 +20,8 @@
             ? Math.max(
                   0,
                   ...results.flatMap((r) =>
-                      r.weightedScores.map((w) => w.weighted)
-                  )
+                      r.weightedScores.map((w) => w.weighted),
+                  ),
               )
             : 0;
     });
@@ -38,63 +42,62 @@
     }
 </script>
 
-<section class="card results">
-    <div class="header">
-        <h2>Results</h2>
-        <div class="export-actions">
-            <button onclick={handleDownload} class="btn btn-success">Download As Markdown</button>
-            <button onclick={handleCopy} class="btn btn-outline">Copy Markdown to Clipboard</button>
-        </div>
+<div class="header">
+    <h2>Results</h2>
+    <div class="export-actions">
+        <button onclick={handleDownload} class="btn btn-success"
+            >Download As Markdown</button
+        >
+        <button onclick={handleCopy} class="btn btn-outline"
+            >Copy Markdown to Clipboard</button
+        >
     </div>
+</div>
 
-    {#if results && results.length}
-        <div class="results-list">
-            {#each results as result, index (result.optionId)}
-                <div class="result-card rank-{index + 1}">
-                    <div class="result-header">
-                        <span class="rank">#{index + 1}</span>
-                        <h3>{result.optionName}</h3>
-                        <span class="total-score"
-                            >{result.totalScore.toFixed(2)}</span
-                        >
-                    </div>
-
-                    <div class="breakdown">
-                        {#each result.weightedScores as ws}
-                            <div class="breakdown-item">
-                                <div class="criterion-col">
-                                    <span class="criterion-name"
-                                        >{ws.criterionName}</span
-                                    >
-                                </div>
-
-                                <div
-                                    class="score-bar-container"
-                                    aria-hidden="true"
-                                >
-                                    <div
-                                        class="score-bar-global"
-                                        style="width: {widthPercentGlobal(ws)}%"
-                                    ></div>
-                                </div>
-
-                                <div class="score-meta">
-                                    <span class="score-value"
-                                        >{ws.score} * w = {ws.weighted.toFixed(
-                                            2
-                                        )}</span
-                                    >
-                                </div>
-                            </div>
-                        {/each}
-                    </div>
+{#if results && results.length}
+    <div class="results-list">
+        {#each results as result, index (result.optionId)}
+            <div class="result-card rank-{index + 1}">
+                <div class="result-header">
+                    <span class="rank">#{index + 1}</span>
+                    <h3>{result.optionName}</h3>
+                    <span class="total-score"
+                        >{result.totalScore.toFixed(2)}</span
+                    >
                 </div>
-            {/each}
-        </div>
-    {:else}
-        <p class="no-data">Add criteria and options to see results</p>
-    {/if}
-</section>
+
+                <div class="breakdown">
+                    {#each result.weightedScores as ws}
+                        <div class="breakdown-item">
+                            <div class="criterion-col">
+                                <span class="criterion-name"
+                                    >{ws.criterionName}</span
+                                >
+                            </div>
+
+                            <div class="score-bar-container" aria-hidden="true">
+                                <div
+                                    class="score-bar-global"
+                                    style="width: {widthPercentGlobal(ws)}%"
+                                ></div>
+                            </div>
+
+                            <div class="score-meta">
+                                <span class="score-value"
+                                    >{ws.score} * w = {ws.weighted.toFixed(
+                                        2,
+                                    )}</span
+                                >
+                            </div>
+                        </div>
+                    {/each}
+                </div>
+            </div>
+        {/each}
+    </div>
+{:else}
+    <p class="no-data">Add criteria and options to see results</p>
+{/if}
 
 <style>
     .card {
@@ -165,14 +168,20 @@
         padding: 1rem;
         border-radius: 8px;
         border-left: 4px solid var(--primary);
-        background: linear-gradient(135deg, var(--bg-light-1) 0%, var(--white) 100%);
+        background: linear-gradient(
+            135deg,
+            var(--bg-light-1) 0%,
+            var(--white) 100%
+        );
     }
-
-   
 
     .result-card.rank-1 {
         border-left-color: var(--gold);
-        background: linear-gradient(135deg, var(--bg-light-1) 0%, var(--white) 100%);
+        background: linear-gradient(
+            135deg,
+            var(--bg-light-1) 0%,
+            var(--white) 100%
+        );
 
         .rank {
             color: var(--gold-dark);
@@ -184,13 +193,21 @@
         }
 
         .score-bar-global {
-            background: linear-gradient(90deg, var(--gold) 0%, var(--gold-dark) 100%);
+            background: linear-gradient(
+                90deg,
+                var(--gold) 0%,
+                var(--gold-dark) 100%
+            );
         }
     }
 
     .result-card.rank-2 {
         border-left-color: var(--silver);
-        background: linear-gradient(135deg, var(--bg-light-2) 0%, var(--white) 100%);
+        background: linear-gradient(
+            135deg,
+            var(--bg-light-2) 0%,
+            var(--white) 100%
+        );
         .rank {
             color: var(--silver);
             font-size: 1.5rem;
@@ -199,15 +216,23 @@
         .total-score {
             color: var(--silver);
         }
-        
+
         .score-bar-global {
-            background: linear-gradient(90deg, var(--silver) 0%, var(--silver) 100%);
+            background: linear-gradient(
+                90deg,
+                var(--silver) 0%,
+                var(--silver) 100%
+            );
         }
     }
 
     .result-card.rank-3 {
         border-left-color: var(--bronze);
-        background: linear-gradient(135deg, var(--bg-light-2) 0%, var(--white) 100%);
+        background: linear-gradient(
+            135deg,
+            var(--bg-light-2) 0%,
+            var(--white) 100%
+        );
         .rank {
             color: var(--bronze-dark);
             font-size: 1.5rem;
@@ -216,9 +241,13 @@
         .total-score {
             color: var(--bronze-dark);
         }
-        
+
         .score-bar-global {
-            background: linear-gradient(90deg, var(--bronze) 0%, var(--bronze-dark) 100%);
+            background: linear-gradient(
+                90deg,
+                var(--bronze) 0%,
+                var(--bronze-dark) 100%
+            );
         }
     }
 
@@ -277,8 +306,6 @@
         position: relative;
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
     }
-
-     
 
     .score-bar-global {
         position: absolute;

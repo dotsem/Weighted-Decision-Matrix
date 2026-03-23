@@ -1,5 +1,5 @@
 :root {
-    --primary: #148f7e;
+    --primary: #FF7B00;
 
     --success: #10b981;
     --success-2: #059669;
@@ -7,23 +7,23 @@
     --danger: #ef4444;
     --danger-hover: #c91313;
 
-    --white: #ffffff;
-    --bg-light-1: #f9fafb;
-    --bg-light-2: #fafafa;
-    --muted-light: #f0f4ff;
-    --border-light: #e5e7eb;
-    --bg-light-3: #e9e9e9;
+    --white: #292929;
+    --bg-light-1: #333333;
+    --bg-light-2: #3D3D3D;
+    --muted-light: #474747;
+    --border-light: #3D3D3D;
+    --bg-light-3: #474747;
     --muted-text: #9ca3af;
 
     --gold: #fbbf24;
     --gold-dark: #f59e0b;
     --silver: #a19f9a;
     --bronze: #cd7f32;
-    --bronze-dark: #8f4802;
+    --bronze-dark: #9d5309;
 
-    --bg: #a4cfbf;
+    --bg: #292929;
     --muted: #6b7280;
-    --text: #111111;
+    --text: #ffffff;
     --input-bg: #071223;
     --input-border: #374151;
 }

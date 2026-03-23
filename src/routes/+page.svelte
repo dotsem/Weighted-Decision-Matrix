@@ -1,6 +1,6 @@
 <script lang="ts">
-    import MatrixTable from "$lib/components/MatrixTable.svelte";
-    import ResultsSection from "$lib/components/ResultsSection.svelte";
+    import MatrixTable from "./MatrixTable.svelte";
+    import ResultsSection from "./ResultsSection.svelte";
     import { matrixStore } from "$lib/stores/matrixStore.svelte";
     import { exportToMarkdown } from "$lib/utils/export";
 
@@ -8,46 +8,44 @@
         exportToMarkdown(
             matrixStore.criteria,
             matrixStore.options,
-            matrixStore.results
+            matrixStore.results,
         );
     }
 </script>
 
-<svelte:head> 
+<svelte:head>
     <title>Weighted Decision Matrix</title>
 </svelte:head>
 
-<div class="container">
-    <MatrixTable
-        options={matrixStore.options}
-        criteria={matrixStore.criteria}
-        onAddOption={() => matrixStore.addOption()}
-        onRemoveOption={(id) => matrixStore.removeOption(id)}
-        onAddCriterion={() => matrixStore.addCriterion()}
-        onRemoveCriterion={(id) => matrixStore.removeCriterion(id)}
-        onChange={() => matrixStore.updateOption()}
-        onClearAll={() => {
-            if (confirm("Are you sure?")) matrixStore.clear();
-        }}
-    />
-    <br />
+<MatrixTable
+    options={matrixStore.options}
+    criteria={matrixStore.criteria}
+    onAddOption={() => matrixStore.addOption()}
+    onRemoveOption={(id) => matrixStore.removeOption(id)}
+    onAddCriterion={() => matrixStore.addCriterion()}
+    onRemoveCriterion={(id) => matrixStore.removeCriterion(id)}
+    onChange={() => matrixStore.updateOption()}
+    onClearAll={() => {
+        if (confirm("Are you sure?")) matrixStore.clear();
+    }}
+/>
+<hr />
 
-    <ResultsSection
-        results={matrixStore.results}
-        criteria={matrixStore.criteria}
-        options={matrixStore.options}
-        onExport={handleExport}
-    />
-</div>
+<ResultsSection
+    results={matrixStore.results}
+    criteria={matrixStore.criteria}
+    options={matrixStore.options}
+    onExport={handleExport}
+/>
 
 <style>
     :global(body) {
-        margin: 0;
+        margin: 1rem;
         padding: 0;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
             Oxygen, Ubuntu, Cantarell, sans-serif;
-        background-color: var(--bg);
         min-height: 100vh;
+        background-color: var(--bg);
     }
 
     .container {

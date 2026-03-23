@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { Option, Criterion } from "$lib/types";
-    import ReactiveTextArea from "./ReactiveTextArea.svelte";
-    import AddCell from "./AddCell.svelte";
+    import ReactiveTextArea from "../lib/components/ReactiveTextArea.svelte";
+    import AddCell from "../lib/components/AddCell.svelte";
 
     interface Props {
         options: Option[];
@@ -26,129 +26,123 @@
     }: Props = $props();
 </script>
 
-<section class="card">
-    <div class="table-container">
-        <table class="matrix-table">
-            <thead>
-                <tr class="label-row">
-                  {#if criteria.length === 1} 
+<div class="table-container">
+    <table class="matrix-table">
+        <thead>
+            <tr class="label-row">
+                {#if criteria.length === 1}
                     <th class="label-col">Criteria</th>
-                    {:else}
+                {:else}
                     <th class="label-col">Criterion</th>
-                    {/if}
-                        <th class="label-col" colspan="{options.length}">Option{options.length > 1 ? "s" : ""}</th>
-                </tr>
+                {/if}
+                <th class="label-col" colspan={options.length}
+                    >Option{options.length > 1 ? "s" : ""}</th
+                >
+            </tr>
 
-                <tr>
-                    <th class="criterion-col">
-                        <button
-                            class="clear-all-button"
-                            onclick={onClearAll}>Clear Matrix</button>
+            <tr>
+                <th class="criterion-col">
+                    <button class="clear-all-button" onclick={onClearAll}
+                        >Clear Matrix</button
+                    >
+                </th>
+
+                {#each options as option (option.id)}
+                    <th class="option-col">
+                        <div class="option-header">
+                            <ReactiveTextArea
+                                bind:value={option.name}
+                                onchange={onChange}
+                                class="option-name-input"
+                                placeholder="Option"
+                            ></ReactiveTextArea>
+
+                            <button
+                                onclick={() => onRemoveOption(option.id)}
+                                class="btn-icon btn-danger-icon option-delete"
+                                disabled={options.length <= 1}
+                                title="Remove option"
+                            >
+                                x
+                            </button>
+                        </div>
                     </th>
+                {/each}
+            </tr>
+        </thead>
 
-                    {#each options as option (option.id)}
-                        <th class="option-col">
-                            <div class="option-header">
-                                <ReactiveTextArea
-                                    bind:value={option.name}
+        <tbody>
+            {#each criteria as criterion, idx (criterion.id)}
+                <tr class="criterion-row">
+                    <td class="criterion-name-cell">
+                        <div class="criterion-row-inner">
+                            <ReactiveTextArea
+                                bind:value={criterion.name}
+                                onchange={onChange}
+                                class="criterion-name-input"
+                                placeholder="Criterion"
+                            ></ReactiveTextArea>
+
+                            <div class="weight-badge">
+                                <label for="weight">Weight:</label>
+                                <input
+                                    name="weight"
+                                    type="number"
+                                    bind:value={criterion.weight}
                                     onchange={onChange}
-                                    class="option-name-input"
-                                    placeholder="Option"
-                                ></ReactiveTextArea>
+                                    min="0"
+                                    max="10"
+                                    class="weight-input"
+                                />
 
                                 <button
-                                    onclick={() => onRemoveOption(option.id)}
-                                    class="btn-icon btn-danger-icon option-delete"
-                                    disabled={options.length <= 1}
-                                    title="Remove option"
+                                    onclick={() =>
+                                        onRemoveCriterion(criterion.id)}
+                                    class="btn-icon btn-danger-icon criterion-delete"
+                                    disabled={criteria.length <= 1}
+                                    title="Remove criterion"
                                 >
                                     x
                                 </button>
                             </div>
-                        </th>
-                    {/each}
-                </tr>
-            </thead>
+                        </div>
+                    </td>
 
-            <tbody>
-                {#each criteria as criterion, idx (criterion.id)}
-                    <tr class="criterion-row">
-                        <td class="criterion-name-cell">
-                            <div class="criterion-row-inner">
-                                <ReactiveTextArea
-                                    bind:value={criterion.name}
-                                    onchange={onChange}
-                                    class="criterion-name-input"
-                                    placeholder="Criterion"
-                                ></ReactiveTextArea>
-
-                                <div class="weight-badge">
-                                    <label for="weight">Weight:</label>
-                                    <input
-                                        name="weight"
-                                        type="number"
-                                        bind:value={criterion.weight}
-                                        onchange={onChange}
-                                        min="0"
-                                        max="10"
-                                        class="weight-input"
-                                    />
-
-                                    <button
-                                        onclick={() => onRemoveCriterion(criterion.id)}
-                                        class="btn-icon btn-danger-icon criterion-delete"
-                                        disabled={criteria.length <= 1}
-                                        title="Remove criterion"
-                                    >
-                                        x
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-
-                        {#each options as option (option.id)}
-                            <td class="score-cell">
-                                <input
-                                    type="number"
-                                    bind:value={option.scores[criterion.id]}
-                                    onchange={onChange}
-                                    min="0"
-                                    max="10"
-                                    class="score-input"
-                                    placeholder="0"
-                                />
-                                => {option.scores[criterion.id] * criterion.weight}
-                            </td>
-                        {/each}
-
-                        {#if idx === 0}
-                            <AddCell
-                                tag="td"
-                                rowspan={criteria.length}
-                                onclick={onAddOption}
+                    {#each options as option (option.id)}
+                        <td class="score-cell">
+                            <input
+                                type="number"
+                                bind:value={option.scores[criterion.id]}
+                                onchange={onChange}
+                                min="0"
+                                max="10"
+                                class="score-input"
+                                placeholder="0"
                             />
-                        {/if}
-                    </tr>
-                {/each}
+                            => {option.scores[criterion.id] * criterion.weight}
+                        </td>
+                    {/each}
 
-                <tr>
-                    <td class="criterion-name-cell"></td>
-                    <AddCell colspan={options.length} onclick={onAddCriterion} />
-                    <td class="criterion-name-cell"></td>
+                    {#if idx === 0}
+                        <AddCell
+                            tag="td"
+                            rowspan={criteria.length}
+                            onclick={onAddOption}
+                        />
+                    {/if}
                 </tr>
-            </tbody>
-        </table>
-    </div>
-</section>
+            {/each}
+
+            <tr>
+                <td class="criterion-name-cell"></td>
+                <AddCell colspan={options.length} onclick={onAddCriterion} />
+                <td class="criterion-name-cell"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 <style>
-    .card {
-        background: var(--white);
-        border-radius: 12px;
-        padding: 1.2rem;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-    }
-
     .card .table-container {
         overflow-x: auto;
         border-radius: 8px;
@@ -293,7 +287,7 @@
 
     .btn-danger-icon {
         background-color: var(--danger);
-        color: var(--bg-light-3);
+        color: var(--text);
     }
 
     .btn-danger-icon:hover:not(:disabled) {
@@ -302,7 +296,7 @@
 
     .clear-all-button {
         background: var(--danger);
-        color: var(--white);
+        color: var(--text);
         cursor: pointer;
         font-weight: 600;
         padding: 8px 16px;
@@ -336,8 +330,14 @@
     }
 
     .score-cell {
-        background: var(--white);
+        background: var(--bg);
+        color: var(--text);
         padding: 0.3rem;
+
+        input {
+            background: var(--bg-light-1);
+            color: var(--text);
+        }
     }
 
     :global(.score-input) {

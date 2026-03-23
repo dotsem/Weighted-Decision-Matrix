@@ -28,12 +28,12 @@
 <style>
     .add-cell {
         padding: 0;
-        background: rgba(102, 126, 234, 0.05);
+        background: var(--bg-light-3);
         vertical-align: middle;
-        border: 1px solid rgba(0,0,0,0.06);
         text-align: center;
         font-weight: bold;
         font-size: 1.2rem;
+        color: var(--text);
 
         cursor: pointer;
 
@@ -41,16 +41,13 @@
             width: 32px;
             min-width: 32px;
             max-width: 32px;
-            background: rgba(102, 126, 234, 0.08);
         }
 
         &.add-row {
             height: 40px;
             min-height: 40px;
             max-height: 40px;
-            background: rgba(102, 126, 234, 0.05);
         }
-
     }
 
     th.add-cell {
